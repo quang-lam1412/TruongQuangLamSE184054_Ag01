@@ -1,0 +1,169 @@
+﻿<Window x:Class="Lucy_SalesData.Windows.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Đăng nhập - Lucy Sales Data" 
+        Height="420" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="White">
+
+    <Window.Resources>
+        <!-- Simple Button Style -->
+        <Style x:Key="SimpleButton" TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                               CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1976D2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Cancel Button Style -->
+        <Style x:Key="CancelButton" TargetType="Button">
+            <Setter Property="Background" Value="#f44336"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                               CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#d32f2f"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Simple TextBox Style -->
+        <Style x:Key="SimpleTextBox" TargetType="TextBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#ddd"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Simple PasswordBox Style -->
+        <Style x:Key="SimplePasswordBox" TargetType="PasswordBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#ddd"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+            <TextBlock Text="ĐĂNG NHẬP" 
+                      FontSize="24" 
+                      FontWeight="Bold" 
+                      Foreground="#333"
+                      HorizontalAlignment="Center"/>
+            <TextBlock Text="Lucy Sales Data" 
+                      FontSize="14" 
+                      Foreground="#666"
+                      HorizontalAlignment="Center"
+                      Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Username -->
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Tên đăng nhập:" 
+                      FontSize="14" 
+                      Foreground="#333"
+                      Margin="0,0,0,5"/>
+            <TextBox x:Name="txtUsername" 
+                    Style="{StaticResource SimpleTextBox}"/>
+        </StackPanel>
+
+        <!-- Password -->
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Mật khẩu:" 
+                      FontSize="14" 
+                      Foreground="#333"
+                      Margin="0,0,0,5"/>
+            <PasswordBox x:Name="txtPassword" 
+                        Style="{StaticResource SimplePasswordBox}"/>
+        </StackPanel>
+
+        <!-- Remember Me -->
+        <CheckBox x:Name="chkRememberMe" 
+                 Grid.Row="6"
+                 Content="Ghi nhớ đăng nhập"
+                 Foreground="#333"
+                 FontSize="12"/>
+
+        <!-- Login Button -->
+        <Button x:Name="btnLogin" 
+               Grid.Row="8"
+               Content="Đăng nhập"
+               Style="{StaticResource SimpleButton}"
+               Click="BtnLogin_Click"
+               HorizontalAlignment="Stretch"/>
+
+        <!-- Cancel Button -->
+        <Button x:Name="btnCancel" 
+               Grid.Row="10"
+               Content="Hủy bỏ"
+               Style="{StaticResource CancelButton}"
+               Click="BtnCancel_Click"
+               HorizontalAlignment="Stretch"/>
+
+        <!-- Error Message -->
+        <TextBlock x:Name="lblError" 
+                  Grid.Row="12"
+                  Foreground="#f44336"
+                  HorizontalAlignment="Center"
+                  TextWrapping="Wrap"
+                  FontSize="12"
+                  Visibility="Collapsed"/>
+    </Grid>
+</Window>

@@ -1,0 +1,314 @@
+﻿<Window x:Class="Lucy_SalesData.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Lucy Sales Data Management System" 
+        Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+
+    <Window.Resources>
+        <!-- Modern Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" Opacity="0.15" BlurRadius="15"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Flat Menu Button Style -->
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2c3e50"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="#ecf0f1"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="140"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                               CornerRadius="15"
+                               BorderThickness="{TemplateBinding BorderThickness}"
+                               BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#f8f9fa"/>
+                                <Setter Property="BorderBrush" Value="#3498db"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#e9ecef"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header với Gradient -->
+        <Border Grid.Row="0" Padding="30">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#667eea" Offset="0"/>
+                    <GradientStop Color="#764ba2" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Title Section -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="LUCY SALES DATA MANAGEMENT SYSTEM" 
+                              FontSize="26" 
+                              FontWeight="Light" 
+                              Foreground="White"
+                              Opacity="0.95"/>
+                    <TextBlock x:Name="lblWelcome" 
+                              Text="Chào mừng, [Tên nhân viên]" 
+                              FontSize="16" 
+                              Foreground="White"
+                              Opacity="0.8"
+                              Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <!-- Action Buttons -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- ✅ BỎ CornerRadius KHỎI BUTTON -->
+                    <Button x:Name="btnProfile" 
+                           Content="Thông tin cá nhân"
+                           Background="Transparent"
+                           Foreground="White"
+                           BorderBrush="White"
+                           BorderThickness="2"
+                           Padding="20,12"
+                           Margin="0,0,15,0"
+                           FontSize="14"
+                           Click="BtnProfile_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                       CornerRadius="25"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="Foreground" Value="#667eea"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!-- ✅ BỎ CornerRadius KHỎI BUTTON -->
+                    <Button x:Name="btnLogout" 
+                           Content="Đăng xuất"
+                           Background="#ff6b6b"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Padding="20,12"
+                           FontSize="14"
+                           Click="BtnLogout_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       CornerRadius="25"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#ff5252"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content với Background Pattern -->
+        <ScrollViewer Grid.Row="1" Padding="30">
+            <ScrollViewer.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#f8f9fa" Offset="0"/>
+                    <GradientStop Color="#e9ecef" Offset="1"/>
+                </LinearGradientBrush>
+            </ScrollViewer.Background>
+
+            <StackPanel>
+                <!-- Dashboard Title -->
+                <TextBlock Text="BẢNG ĐIỀU KHIỂN CHÍNH" 
+                          FontSize="32" 
+                          FontWeight="Light" 
+                          Foreground="#2c3e50"
+                          HorizontalAlignment="Center"
+                          Margin="0,20,0,40"/>
+
+                <!-- Stats Cards với Animation Effect -->
+                <Grid Margin="0,0,0,40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Total Customers -->
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <Border Background="#e8f8f5" CornerRadius="50" Width="80" Height="80" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="👥" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Tổng Khách Hàng" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" Foreground="#7f8c8d"/>
+                            <TextBlock x:Name="lblTotalCustomers" Text="0" FontSize="28" FontWeight="Bold" 
+                                      Foreground="#27ae60" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Total Products -->
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <Border Background="#e3f2fd" CornerRadius="50" Width="80" Height="80" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="📦" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Tổng Sản Phẩm" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" Foreground="#7f8c8d"/>
+                            <TextBlock x:Name="lblTotalProducts" Text="0" FontSize="28" FontWeight="Bold" 
+                                      Foreground="#3498db" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Total Orders -->
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <Border Background="#fff3e0" CornerRadius="50" Width="80" Height="80" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="🛒" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Tổng Đơn Hàng" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" Foreground="#7f8c8d"/>
+                            <TextBlock x:Name="lblTotalOrders" Text="0" FontSize="28" FontWeight="Bold" 
+                                      Foreground="#f39c12" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Revenue -->
+                    <Border Grid.Column="3" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <Border Background="#ffebee" CornerRadius="50" Width="80" Height="80" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="💰" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Doanh Thu" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" Foreground="#7f8c8d"/>
+                            <TextBlock x:Name="lblTotalRevenue" Text="0 VNĐ" FontSize="28" FontWeight="Bold" 
+                                      Foreground="#e74c3c" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Main Menu Buttons -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Customer Management -->
+                    <Button Grid.Column="0" Style="{StaticResource MenuButtonStyle}" Click="BtnCustomerManagement_Click">
+                        <StackPanel>
+                            <Border Background="#e8f8f5" CornerRadius="25" Width="60" Height="60" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="👥" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="QUẢN LÝ KHÁCH HÀNG" FontSize="16" FontWeight="SemiBold" 
+                                      HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#27ae60"/>
+                            <TextBlock Text="Thêm, sửa, xóa thông tin khách hàng" FontSize="12" 
+                                      HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,8,0,0" 
+                                      Foreground="#7f8c8d"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Product Management -->
+                    <Button Grid.Column="1" Style="{StaticResource MenuButtonStyle}" Click="BtnProductManagement_Click">
+                        <StackPanel>
+                            <Border Background="#e3f2fd" CornerRadius="25" Width="60" Height="60" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="📦" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="QUẢN LÝ SẢN PHẨM" FontSize="16" FontWeight="SemiBold" 
+                                      HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#3498db"/>
+                            <TextBlock Text="Quản lý kho hàng và thông tin sản phẩm" FontSize="12" 
+                                      HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,8,0,0"
+                                      Foreground="#7f8c8d"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Order Processing -->
+                    <Button Grid.Column="2" Style="{StaticResource MenuButtonStyle}" Click="BtnOrderProcessing_Click">
+                        <StackPanel>
+                            <Border Background="#fff3e0" CornerRadius="25" Width="60" Height="60" HorizontalAlignment="Center" Margin="0,0,0,15">
+                                <TextBlock Text="🛒" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="XỬ LÝ ĐÔN HÀNG" FontSize="16" FontWeight="SemiBold" 
+                                      HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#f39c12"/>
+                            <TextBlock Text="Tạo mới và quản lý đơn hàng" FontSize="12" 
+                                      HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,8,0,0"
+                                      Foreground="#7f8c8d"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer với Gradient -->
+        <Border Grid.Row="2" Padding="20">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#2c3e50" Offset="0"/>
+                    <GradientStop Color="#34495e" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" 
+                          Text="Sales Management System" 
+                          Foreground="#bdc3c7" 
+                          VerticalAlignment="Center"
+                          FontSize="14"/>
+
+                <TextBlock Grid.Column="1" 
+                          x:Name="lblCurrentTime"
+                          Text="[Current Time]" 
+                          Foreground="#bdc3c7" 
+                          VerticalAlignment="Center"
+                          FontSize="14"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

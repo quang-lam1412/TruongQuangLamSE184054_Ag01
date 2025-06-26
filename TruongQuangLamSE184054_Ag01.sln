@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{44F4F9A7-0621-4C8D-99B5-55EA642668D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrươngQuangLâmWPF", "Lucy_SalesData\TrươngQuangLâmWPF.csproj", "{7EF9A2E4-7E75-4343-B40C-912E21296078}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44F4F9A7-0621-4C8D-99B5-55EA642668D9} = {44F4F9A7-0621-4C8D-99B5-55EA642668D9}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44F4F9A7-0621-4C8D-99B5-55EA642668D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F4F9A7-0621-4C8D-99B5-55EA642668D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F4F9A7-0621-4C8D-99B5-55EA642668D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F4F9A7-0621-4C8D-99B5-55EA642668D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EF9A2E4-7E75-4343-B40C-912E21296078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EF9A2E4-7E75-4343-B40C-912E21296078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EF9A2E4-7E75-4343-B40C-912E21296078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EF9A2E4-7E75-4343-B40C-912E21296078}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F76F0745-DE80-4A37-9F35-A30647CB9915}
+	EndGlobalSection
+EndGlobal
