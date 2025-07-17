@@ -5,6 +5,7 @@ using Services;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData.Windows
 {
@@ -27,7 +28,7 @@ namespace Lucy_SalesData.Windows
                 _orderId = orderId;
 
                 // Dependency Injection
-                var serviceProvider = ((App)Application.Current).ServiceProvider;
+                var serviceProvider = AppContext.ServiceProvider;
                 using var scope = serviceProvider.CreateScope();
                 _orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
                 _customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
@@ -89,7 +90,7 @@ namespace Lucy_SalesData.Windows
         {
             try
             {
-                var serviceProvider = ((App)Application.Current).ServiceProvider;
+                var serviceProvider = AppContext.ServiceProvider;
                 using var scope = serviceProvider.CreateScope();
                 var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
 
@@ -111,7 +112,7 @@ namespace Lucy_SalesData.Windows
         {
             try
             {
-                var serviceProvider = ((App)Application.Current).ServiceProvider;
+                var serviceProvider = AppContext.ServiceProvider;
                 using var scope = serviceProvider.CreateScope();
                 var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
 
@@ -133,7 +134,7 @@ namespace Lucy_SalesData.Windows
         {
             try
             {
-                var serviceProvider = ((App)Application.Current).ServiceProvider;
+                var serviceProvider = AppContext.ServiceProvider;
                 using var scope = serviceProvider.CreateScope();
                 var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
 
@@ -363,7 +364,7 @@ namespace Lucy_SalesData.Windows
                 };
 
                 // ✅ SAVE ORDER
-                var serviceProvider = ((App)Application.Current).ServiceProvider;
+                var serviceProvider = AppContext.ServiceProvider;
                 using var scope = serviceProvider.CreateScope();
                 var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
 

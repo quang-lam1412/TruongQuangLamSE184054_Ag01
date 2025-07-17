@@ -141,6 +141,12 @@
                  Foreground="#333"
                  FontSize="12"/>
 
+        <!-- Role Selection -->
+        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0,10,0,0">
+            <RadioButton x:Name="rdoAdmin" Content="Admin" IsChecked="True" Margin="0,0,20,0"/>
+            <RadioButton x:Name="rdoCustomer" Content="Customer"/>
+        </StackPanel>
+
         <!-- Login Button -->
         <Button x:Name="btnLogin" 
                Grid.Row="8"
@@ -166,4 +172,5 @@
                   FontSize="12"
                   Visibility="Collapsed"/>
     </Grid>
+    
 </Window>

@@ -12,5 +12,6 @@ namespace Repositories
         Task<List<Customer>> SearchCustomersAsync(string searchTerm);
         Task<bool> CustomerExistsAsync(int customerId);
         Task<bool> CompanyNameExistsAsync(string companyName, int? excludeCustomerId = null);
+        Task<Customer?> ValidateCustomerAsync(string phone, string password);
     }
 }

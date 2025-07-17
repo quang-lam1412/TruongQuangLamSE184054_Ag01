@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Services;
 using System.Windows;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData.Windows
 {
@@ -16,7 +17,7 @@ namespace Lucy_SalesData.Windows
             InitializeComponent();
 
             // Dependency Injection
-            var serviceProvider = ((App)Application.Current).ServiceProvider;
+            var serviceProvider = AppContext.ServiceProvider;
             _customerService = serviceProvider.GetRequiredService<ICustomerService>();
 
             _customer = customer;

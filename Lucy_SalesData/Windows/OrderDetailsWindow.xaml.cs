@@ -3,6 +3,7 @@ using Lucy_SalesData.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
 using System.Windows;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData.Windows
 {
@@ -17,7 +18,7 @@ namespace Lucy_SalesData.Windows
             _orderId = orderId;
 
             // Dependency Injection
-            var serviceProvider = ((App)Application.Current).ServiceProvider;
+            var serviceProvider = AppContext.ServiceProvider;
             using var scope = serviceProvider.CreateScope();
             _orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
 
@@ -28,7 +29,7 @@ namespace Lucy_SalesData.Windows
         {
             try
             {
-                var serviceProvider = ((App)Application.Current).ServiceProvider;
+                var serviceProvider = AppContext.ServiceProvider;
                 using var scope = serviceProvider.CreateScope();
                 var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
 

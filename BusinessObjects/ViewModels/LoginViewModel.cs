@@ -2,18 +2,24 @@
 
 namespace ViewModels
 {
+    public enum UserRole
+    {
+        Admin,
+        Customer
+    }
+
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Tên đăng nhập không được để trống")]
-        [Display(Name = "Tên đăng nhập")]
-        public string UserName { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập hoặc số điện thoại")]
+        public string Identifier { get; set; } = string.Empty; // Username hoặc Phone
 
-        [Required(ErrorMessage = "Mật khẩu không được để trống")]
-        [Display(Name = "Mật khẩu")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
 
-        [Display(Name = "Ghi nhớ đăng nhập")]
         public bool RememberMe { get; set; }
+
+        public UserRole Role { get; set; } = UserRole.Admin; // Giá trị mặc định
     }
 }
+

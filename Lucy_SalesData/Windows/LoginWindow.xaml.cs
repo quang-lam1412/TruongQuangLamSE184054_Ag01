@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Repositories;
 using System.Windows;
 using ViewModels;
+using TruongQuangLamWPF.Windows;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData.Windows
 {
@@ -10,21 +12,29 @@ namespace Lucy_SalesData.Windows
     {
         private readonly IAuthService _authService;
         public Employee? LoggedInEmployee { get; private set; }
+        public Customer? LoggedInCustomer { get; private set; }
 
         public LoginWindow()
         {
             InitializeComponent();
 
             // Dependency Injection setup
-            var serviceProvider = ((App)Application.Current).ServiceProvider;
+            var serviceProvider = AppContext.ServiceProvider;
             _authService = serviceProvider.GetRequiredService<IAuthService>();
 
-            // Set focus to username textbox
             txtUsername.Focus();
 
-            // Handle Enter key press
-            txtUsername.KeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Enter) txtPassword.Focus(); };
-            txtPassword.KeyDown += async (s, e) => { if (e.Key == System.Windows.Input.Key.Enter) await LoginAsync(); };
+            txtUsername.KeyDown += (s, e) =>
+            {
+                if (e.Key == System.Windows.Input.Key.Enter)
+                    txtPassword.Focus();
+            };
+
+            txtPassword.KeyDown += async (s, e) =>
+            {
+                if (e.Key == System.Windows.Input.Key.Enter)
+                    await LoginAsync();
+            };
         }
 
         private async void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -36,13 +46,11 @@ namespace Lucy_SalesData.Windows
         {
             try
             {
-                // Hide error message
                 lblError.Visibility = Visibility.Collapsed;
 
-                // Validate input
                 if (string.IsNullOrWhiteSpace(txtUsername.Text))
                 {
-                    ShowError("Vui lòng nhập tên đăng nhập!");
+                    ShowError("Vui lòng nhập tên đăng nhập hoặc số điện thoại!");
                     txtUsername.Focus();
                     return;
                 }
@@ -54,30 +62,42 @@ namespace Lucy_SalesData.Windows
                     return;
                 }
 
-                // Disable login button during authentication
                 btnLogin.IsEnabled = false;
                 btnLogin.Content = "Đang đăng nhập...";
 
-                // Create login model
+                // ✅ Tạo LoginViewModel đúng
                 var loginModel = new LoginViewModel
                 {
-                    UserName = txtUsername.Text.Trim(),
+                    Identifier = txtUsername.Text.Trim(),
                     Password = txtPassword.Password.Trim(),
-                    RememberMe = chkRememberMe.IsChecked ?? false
+                    RememberMe = chkRememberMe.IsChecked ?? false,
+                    Role = rdoAdmin.IsChecked == true ? UserRole.Admin : UserRole.Customer
+
                 };
 
-                // Authenticate user
-                LoggedInEmployee = await _authService.LoginAsync(loginModel);
+                var result = await _authService.LoginAsync(loginModel);
 
-                if (LoggedInEmployee != null)
+                if (loginModel.Role == UserRole.Admin && result is Employee emp)
                 {
-                    // Login successful
+                    LoggedInEmployee = emp;
                     DialogResult = true;
                     Close();
                 }
+                else if (loginModel.Role == UserRole.Customer && result is Customer cust)
+                {
+                    LoggedInCustomer = cust;
+                    MessageBox.Show("Login thành công! Sẽ mở CustomerWindow");
+
+                    DialogResult = true; // ✅ BẮT BUỘC phải có dòng này để App.xaml.cs biết login thành công
+
+                    Close(); // Close ngay sau khi đặt DialogResult
+                }
+
+
+
+
                 else
                 {
-                    // Login failed
                     ShowError("Tên đăng nhập hoặc mật khẩu không đúng!");
                     txtPassword.Clear();
                     txtUsername.Focus();
@@ -89,7 +109,6 @@ namespace Lucy_SalesData.Windows
             }
             finally
             {
-                // Re-enable login button
                 btnLogin.IsEnabled = true;
                 btnLogin.Content = "Đăng nhập";
             }
@@ -97,8 +116,11 @@ namespace Lucy_SalesData.Windows
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false;
-            Close();
+            if (this.IsLoaded && this.IsActive && this.IsVisible)
+            {
+            
+                this.Close();
+            }
         }
 
         private void ShowError(string message)

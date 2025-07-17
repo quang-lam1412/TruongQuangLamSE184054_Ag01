@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData.Windows
 {
@@ -19,7 +20,7 @@ namespace Lucy_SalesData.Windows
             InitializeComponent();
 
             // Dependency Injection
-            var serviceProvider = ((App)Application.Current).ServiceProvider;
+            var serviceProvider = AppContext.ServiceProvider;
             _customerService = serviceProvider.GetRequiredService<ICustomerService>();
 
             _customers = new ObservableCollection<Customer>();

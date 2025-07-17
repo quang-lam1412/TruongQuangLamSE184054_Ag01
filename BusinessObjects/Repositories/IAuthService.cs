@@ -1,12 +1,14 @@
-﻿using BusinessObjects.Models;
-using ViewModels;
+﻿    using BusinessObjects.Models;
+    using ViewModels;
 
-namespace Repositories
-{
-    public interface IAuthService
+    namespace Repositories
     {
-        Task<Employee?> LoginAsync(LoginViewModel loginModel);
-        Task<bool> IsValidEmployeeAsync(string username, string password);
-        Task<Employee?> GetCurrentEmployeeAsync(string username);
+        public interface IAuthService
+        {
+            Task<object?> LoginAsync(LoginViewModel model);
+
+            Task<bool> IsValidEmployeeAsync(string username, string password);
+            Task<Employee?> GetCurrentEmployeeAsync(string username);
+
+        }
     }
-}

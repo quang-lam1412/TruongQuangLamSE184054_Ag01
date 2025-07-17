@@ -1,4 +1,6 @@
 ﻿using BusinessObjects.Models;
+using BusinessObjects.Services;
+using BusinessObjects.ViewModels;
 using DataAccessLayer;
 using Lucy_SalesData.Windows;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +10,17 @@ using Repositories;
 using Services;
 using System.IO;
 using System.Windows;
+using TruongQuangLamWPF.Windows;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData
 {
     public partial class App : Application
     {
-        private ServiceProvider? _serviceProvider;
-        public IServiceProvider ServiceProvider => _serviceProvider!;
+        private static ServiceProvider? _serviceProvider;
+        public static IServiceProvider ServiceProvider => _serviceProvider!;
         public static Employee? CurrentEmployee { get; set; }
+        public static Customer? CurrentCustomer { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -26,6 +31,17 @@ namespace Lucy_SalesData
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             _serviceProvider = serviceCollection.BuildServiceProvider();
+            try
+            {
+                using var scope = _serviceProvider.CreateScope();
+                var db = scope.ServiceProvider.GetRequiredService<LucySalesDataContext>();
+                var customerCount = db.Customers.Count();
+                Console.WriteLine($"✅ Kết nối DB thành công! Số khách hàng: {customerCount}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Lỗi kết nối DB: {ex.Message}");
+            }
 
             // Show Login Window
             ShowLoginWindow();
@@ -38,21 +54,29 @@ namespace Lucy_SalesData
 
             if (result == true && loginWindow.LoggedInEmployee != null)
             {
-                // Login successful, set current employee and show main window
                 CurrentEmployee = loginWindow.LoggedInEmployee;
                 var mainWindow = new MainWindow();
                 MainWindow = mainWindow;
                 mainWindow.Show();
-
-                // Đặt lại shutdown mode về bình thường
                 ShutdownMode = ShutdownMode.OnMainWindowClose;
             }
+            else if (result == true && loginWindow.LoggedInCustomer != null)
+            {
+                CurrentCustomer = loginWindow.LoggedInCustomer; // <== Gán ở đây
+                var customerWindow = new CustomerWindow();
+                MainWindow = customerWindow;
+                customerWindow.Show();
+                ShutdownMode = ShutdownMode.OnMainWindowClose;
+            }
+
             else
             {
-                // Login cancelled or failed, exit application
-                Shutdown();
+                Shutdown(); // login thất bại hoặc bấm hủy
             }
         }
+
+
+
 
         private void ConfigureServices(IServiceCollection services)
         {
@@ -67,7 +91,8 @@ namespace Lucy_SalesData
             // DbContext - QUAN TRỌNG: Đổi thành Scoped
             services.AddDbContext<LucySalesDataContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")),
-                ServiceLifetime.Scoped);
+                    ServiceLifetime.Scoped);
+
 
             // Repositories - Scoped
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -82,6 +107,13 @@ namespace Lucy_SalesData
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICustomerOrderService, CustomerOrderService>();
+
+            // ViewModels - Scoped
+            services.AddScoped<CustomerOrderViewModel>();
+            services.AddScoped<LoginWindow>();
+
+
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -89,5 +121,8 @@ namespace Lucy_SalesData
             _serviceProvider?.Dispose();
             base.OnExit(e);
         }
+       
+
+
     }
 }

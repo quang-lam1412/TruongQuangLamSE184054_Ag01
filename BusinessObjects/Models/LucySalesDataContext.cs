@@ -34,10 +34,16 @@ public partial class LucySalesDataContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            var connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()) // rất quan trọng
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

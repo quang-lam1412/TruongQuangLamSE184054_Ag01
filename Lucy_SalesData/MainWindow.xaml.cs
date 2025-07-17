@@ -4,6 +4,7 @@ using Services;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Threading;
+using AppContext = Lucy_SalesData.App;
 
 namespace Lucy_SalesData
 {
@@ -17,7 +18,7 @@ namespace Lucy_SalesData
             InitializeComponent();
 
             // Dependency Injection
-            var serviceProvider = ((App)Application.Current).ServiceProvider;
+            var serviceProvider = AppContext.ServiceProvider;
             _dashboardService = serviceProvider.GetRequiredService<IDashboardService>();
 
             InitializeWindow();
@@ -50,7 +51,7 @@ namespace Lucy_SalesData
                 // Lấy dữ liệu trên background thread với service scope riêng
                 var statistics = await Task.Run(async () =>
                 {
-                    var serviceProvider = ((App)Application.Current).ServiceProvider;
+                    var serviceProvider = AppContext.ServiceProvider;
                     using var scope = serviceProvider.CreateScope();
                     var dashboardService = scope.ServiceProvider.GetRequiredService<IDashboardService>();
                     return await dashboardService.GetDashboardStatisticsAsync();

@@ -84,5 +84,27 @@ namespace Repositories
 
             return await query.AnyAsync();
         }
+        public async Task<Customer?> ValidateCustomerAsync(string phone, string password)
+        {
+            phone = phone.Trim().Replace("'", "");
+            password = password.Trim();
+
+            Console.WriteLine($">> ValidateCustomerAsync CALLED");
+            Console.WriteLine($"Phone: '{phone}'");
+            Console.WriteLine($"Password: '{password}'");
+
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(c => c.Phone == phone && c.Password == password);
+
+            if (customer != null)
+                Console.WriteLine("✅ CUSTOMER FOUND");
+            else
+                Console.WriteLine("❌ CUSTOMER NOT FOUND");
+
+            return customer;
+        }
+
+
+
     }
 }
