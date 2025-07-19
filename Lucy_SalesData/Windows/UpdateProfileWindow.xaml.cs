@@ -42,10 +42,12 @@ namespace TrươngQuangLâmWPF.Windows
 
         private void LoadCustomerData()
         {
-            txtName.Text = _currentCustomer.ContactName;
-            txtPhone.Text = _currentCustomer.Phone;
-            txtEmail.Text = _currentCustomer.Email;
+            txtName.Text = _currentCustomer.ContactName ?? "";
+            txtPhone.Text = _currentCustomer.Phone ?? "";
+            txtAddress.Text = _currentCustomer.Address ?? "";
+            txtCompanyName.Text = _currentCustomer.CompanyName ?? "";
         }
+
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -57,6 +59,8 @@ namespace TrươngQuangLâmWPF.Windows
         {
             _currentCustomer.ContactName = txtName.Text.Trim();
             _currentCustomer.Phone = txtPhone.Text.Trim();
+            _currentCustomer.Address = txtAddress.Text.Trim();
+            _currentCustomer.CompanyName = txtCompanyName.Text.Trim();
 
             var updated = await _customerService.UpdateCustomerAsync(_currentCustomer);
             if (updated != null)

@@ -54,5 +54,11 @@ namespace TruongQuangLamWPF.Windows
                 orderWindow.ShowDialog(); // hoặc .Show()
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var updateProfileWindow = new UpdateProfileWindow();
+            updateProfileWindow.ShowDialog();
+        }
     }
 }

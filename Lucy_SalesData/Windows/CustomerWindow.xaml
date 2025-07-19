@@ -16,7 +16,7 @@
                        HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
             <Button Content="Xem đơn hàng" Height="40" Background="#4CAF50" Foreground="White" FontSize="16" Margin="0,5" Click="Button_Click"/>
-            <Button Content="Cập nhật hồ sơ" Height="40" Background="#FF9800" Foreground="White" FontSize="16" Margin="0,5"/>
+            <Button Content="Cập nhật hồ sơ" Height="40" Background="#FF9800" Foreground="White" FontSize="16" Margin="0,5" Click="Button_Click_1"/>
             <Button Content="Đăng xuất" Height="40" Background="#F44336" Foreground="White" FontSize="16" Margin="0,5" Click="Logout_Click"/>
             
         </StackPanel>
